@@ -2,6 +2,7 @@ package com.zyank;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.InputStreamSource;
 
 import com.zyank.spring.HelloWord;
 
@@ -23,7 +24,6 @@ public class App
         
         //静态工场模式
         HelloWord helloWord=ctx.getBean("bean1",HelloWord.class);
-        
         
         helloWord.Say();
     }
