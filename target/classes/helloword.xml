@@ -1,23 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
+	<bean id="prop"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- 这里支持多种寻址方式：classpath和file -->
+				<value>classpath:resource.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<bean id="helloword" class="com.zyank.spring.HelloWord">
 		<!-- 属性赋值 -->
-		<!-- 		
-		<property name="name" value="张高三"></property>
-		 -->
+		<!-- <property name="name" value="张高三"></property> -->
 		<!-- 构造函数赋值 -->
 		<constructor-arg index="0" value="刘全儿"></constructor-arg>
 	</bean>
-	
+
 	<!-- 定义静态工场模式 -->
 	<bean id="helloWordStaticFactory" class="com.zyank.spring.HelloWordStaticFactory"></bean>
-	<bean id="bean1" factory-bean="helloWordStaticFactory" factory-method="newInstance">
+	<bean id="bean1" factory-bean="helloWordStaticFactory"
+		factory-method="newInstance">
 		<constructor-arg index="0" value="静态工场模式"></constructor-arg>
 	</bean>
-	
+
+
+	<!-- 构造函数依赖注入三种方式 -->
+	<!-- 1. index索引 -->
+	<bean id="byIndex" class="com.zyank.spring.HelloWord">
+		<constructor-arg index="0" value="${name}"></constructor-arg>
+		<constructor-arg index="1" value="${age}"></constructor-arg>
+	</bean>
+	<!-- 2. 参数类型 方式 -->
+	<bean id="byType" class="com.zyank.spring.HelloWord">
+		<constructor-arg type="java.lang.String" value="${name}"></constructor-arg>
+		<constructor-arg type="int" value="${age}"></constructor-arg>
+	</bean>
+	<!-- 3. 参数名称 -->
+	<bean id="byName" class="com.zyank.spring.HelloWord">
+		<constructor-arg name="name" value="${name}"></constructor-arg>
+		<constructor-arg name="age" value="${age}"></constructor-arg>
+	</bean>
+
+	<!-- 集合注入 -->
+	<bean id="listBean" class="com.zyank.spring.HelloWord">
+		<property name="values">
+			<list>
+				<value>张三</value>
+				<value>李四</value>
+				<value>王五</value>
+			</list>
+		</property>
+	</bean>
+
 </beans>
