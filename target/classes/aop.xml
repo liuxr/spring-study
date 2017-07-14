@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 配置目标实现类 -->
+	<bean id="helloWorldService" class="com.zyank.aop.service.impl.HelloWorldService"></bean>
+
+	<bean id="aspect" class="com.zyank.aop.HelloWordAspect" />
+	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* com.zyank..*.*(..))" />
+		<aop:aspect ref="aspect">
+			<!-- 前置通知 -->
+			<aop:before pointcut-ref="pointcut" method="beforeAdvice" />
+
+			<!-- 后置最终通知 -->
+			<aop:after pointcut="execution(* com.zyank..*.*(..))"
+				method="afterFinallyAdvice" />
+
+			<!-- 后置返回通知 -->
+			<aop:after-returning
+				pointcut="execution(* com.zyank..*.sayAfterReturning(..))" method="afterReturningAdvice"
+				arg-names="retVal" returning="retVal" />
+
+			<!-- 后置异常通知 -->
+			<aop:after-throwing method="afterThrowingAdvice"
+				arg-names="exception" throwing="exception"
+				pointcut="execution(* com.zyank..*.sayAfterThrowing(..))" />
+				
+				<!-- 环绕通知 -->
+				<aop:around pointcut="execution(* com.zyank..*.sayAround(..))"  
+           method="aroundAdvice"/>  
+		</aop:aspect>
+	</aop:config>
+
+
+
+</beans>
