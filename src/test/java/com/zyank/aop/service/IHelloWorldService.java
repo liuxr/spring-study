@@ -10,4 +10,6 @@ public interface IHelloWorldService {
 	
 	public void sayAround(String param);
 	
+	public void sayBefore(String param);
+	
 }

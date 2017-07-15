@@ -39,7 +39,7 @@ public class AopTest {
 	}
 	
 	@Test  
-	public void testSchemaAroundAdvice() {  
+	public void SchemaAroundAdviceTest() {  
 	    System.out.println("======================================");  
 	    ApplicationContext ctx = new ClassPathXmlApplicationContext("aop.xml");  
 	    IHelloWorldService helloworldService =  
@@ -47,4 +47,25 @@ public class AopTest {
 	    helloworldService.sayAround("haha");  
 	    System.out.println("======================================");  
 	}  
+	
+	
+	@Test
+	public void AnnotationBeforeAdviceTest(){
+		ApplicationContext ctx=new ClassPathXmlApplicationContext("advice.xml");
+		IHelloWorldService helloWorldService=ctx.getBean("helloWorldService",IHelloWorldService.class);
+		helloWorldService.sayBefore("before");
+		
+	}
+	
+	@Test
+	public void AnnotationAroundAdviceTest(){
+		System.out.println("======================================");  
+	    ApplicationContext ctx = new ClassPathXmlApplicationContext("advice.xml");  
+	    IHelloWorldService helloworldService =  
+	    ctx.getBean("helloWorldService", IHelloWorldService.class);  
+	    helloworldService.sayAround("haha");  
+	    System.out.println("======================================"); 
+		
+	}
+	
 }
