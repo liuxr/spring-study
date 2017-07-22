@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/helloword.xml</config>
 		<config>src/main/resources/aop.xml</config>
+		<config>src/main/resources/sql.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
